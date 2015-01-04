@@ -32,7 +32,7 @@ namespace SmartHome
             /// </summary>
             ACTUATORREAD=0x20,
             /// <summary>
-            /// Writes position to actuator ARDUINO,CHILD,PIN,VALUE CHILD=0xff if no child
+            /// Writes position to actuator ARDUINO,CHILD,PIN,TYPE,VALUE CHILD=0xff if no child
             /// </summary>
             ACTUATORWRITE=0x21,
             /// <summary>
@@ -47,6 +47,34 @@ namespace SmartHome
             /// Therminator byte
             /// </summary>
             THERMINATOR=0xFF//Therminates command
+        }
+
+        public enum receivingBytes : byte
+        {
+            /// <summary>
+            /// Retrieving sensor value ARDUINO, PIN, VALUE
+            /// </summary>
+            SENSORVALUE=0x10,
+            /// <summary>
+            /// Retreiving acuator value ARDUINO, CHILD, PIN, VALUE
+            /// </summary>
+            ACTUATORVALUE=0x20,
+            /// <summary>
+            /// Retrieving actuator value if succesfull movement ARDUINO, CHILD, PIN, VALUE
+            /// </summary>
+            ACTUATORSUCCES=0x21,
+            /// <summary>
+            /// Initialised correctly
+            /// </summary>
+            INITSUCCES=0xFA,
+            /// <summary>
+            /// No therminator received(read error)
+            /// </summary>
+            RECEIVEDNOTHERMINATOR=0xFE,
+            /// <summary>
+            /// Therminator
+            /// </summary>
+            THERMINATOR=0xFF
         }
     }
 }

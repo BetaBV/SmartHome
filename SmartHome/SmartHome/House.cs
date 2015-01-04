@@ -20,6 +20,9 @@ namespace SmartHome
         private Serial serial;
         private List<Person> persons;
         private List<String> locations;
+
+        private List<Sensor> sensors = new List<Sensor>();
+        private List<Actuator> actuators = new List<Actuator>();
         
         //Constructor
         public House(Serial serial, List<Person> persons, List<String> locations)
@@ -42,27 +45,39 @@ namespace SmartHome
         
         public int ReadSensor(string location)
         {
+
             return 0;//todo
         }
 
-        public bool WriteActuator(int location, int value)
+        public bool WriteActuator(Byte[] location, Byte value)
         {
-            return false;//todo
+            //Write to first actuator with correct location with value
+            //if it doesn't exist write an empty byte array
+            try
+            {
+                return serial.SerialWrite(actuators.First(actuator => actuator.ActuatorLocation == location).WriteActuator(value));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+            
         }
 
-        public int ReadActuator(int location)
+        public int ReadActuator(byte[] location)
         {
             return 0;//todo
         }
 
         public List<Sensor> GetSensorsAtLocation(String location)
         {
-            return new List<Sensor>();//todo
+            return sensors.Where(sensor=>sensor.SensorPhysicalLocation==location).ToList();
         }
 
         public List<Actuator> GetActuatorsAtLocation(string location)
         {
-            return new List<Actuator>();//todo
+            return actuators.Where(actuator => actuator.ActuatorPhysicalLocation == location).ToList(); //todo
         }
 
         public List<String> GetLocations()

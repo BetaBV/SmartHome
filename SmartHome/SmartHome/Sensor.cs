@@ -14,7 +14,7 @@ namespace SmartHome
         public event DataReceivedHandler DataReceived;
         public SensorType Type { get; private set; }
         public String SensorLocation { get; private set; }//May be class
-        public String SensorFysicalLocation { get; private set; }
+        public String SensorPhysicalLocation { get; private set; }
         public int SensorId { get; private set; }
         //Private
         internal delegate void DataReceivedHandler(object sender, ReceivedData data);

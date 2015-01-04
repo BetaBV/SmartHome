@@ -14,7 +14,7 @@ namespace SmartHome
         public String ActuatorType { get; private set; }
         public ActuatorLowType ActuatorLowType { get; private set; }
         public int ActuatorId { get; private set; }
-        public String AcuatorLocation { get; private set; }//May be Class
+        public byte[] ActuatorLocation { get; private set; }//May be Class
         public String ActuatorPhysicalLocation { get; private set; }
         //Private
 
@@ -22,27 +22,20 @@ namespace SmartHome
 
         //Functions
         //Public
-        public int[] WriteActuator(int value)
+        public Byte[] WriteActuator(Byte value)
         {
-            switch (ActuatorLowType)
-            {
-                case ActuatorLowType.LED:
-                    return new int[] { };
-                    break;
-                case ActuatorLowType.SERVO:
-                    return new int[] { };
-                    break;
-
-                default:
-                    return new int[] { };
-                    break;
-            }
+            var retList = new List<Byte>();
+            retList.Add((Byte)dataBytes.ACTUATORWRITE);
+            retList.AddRange(ActuatorLocation);
+            retList.Add((Byte)ActuatorLowType);
+            retList.Add((Byte)dataBytes.THERMINATOR);
+            return retList.ToArray();
         }
 
 
         public int ReadActuator(byte[] data)
         {
-            return 0;
+            return 0;//todo HOW?!?
         }
         //Private
 
