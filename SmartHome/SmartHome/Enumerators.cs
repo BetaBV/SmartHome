@@ -23,7 +23,21 @@ namespace SmartHome
 
         public enum dataBytes : byte
         {
-            ///<summary>Intialises conection, COMMAND,SERVERVERSION,THERMINATOR</summary>
+            /// <summary>
+            /// Reads a sensors value ARDUINO,PIN
+            /// </summary>
+            SENSORREAD=0x10,
+            /// <summary>
+            /// Reads the current(last known) position of Actuator ARDUINO,CHILD,PIN CHILD=0xff if no child
+            /// </summary>
+            ACTUATORREAD=0x20,
+            /// <summary>
+            /// Writes position to actuator ARDUINO,CHILD,PIN,VALUE CHILD=0xff if no child
+            /// </summary>
+            ACTUATORWRITE=0x21,
+            /// <summary>
+            /// Intialises conection, SERVERVERSION
+            /// </summary>
             INIT=0xFA,
             /// <summary>
             /// When data has been received without a therminator
