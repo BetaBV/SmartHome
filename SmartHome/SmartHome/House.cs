@@ -29,6 +29,8 @@ namespace SmartHome
             this.persons = persons;
             this.locations = locations;
 
+            //todo Get Info from MySQL
+
             //Initialise Serial
             serial.SerialReceived += serial_SerialReceived;
             if (!serial.IsOpen) serial.SerialConnect("COM17", 9600);//todo ask for com port
