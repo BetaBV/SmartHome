@@ -158,7 +158,8 @@ namespace SmartHome
         public SerialDataEventArgs(byte[] data)
         {
             //Clone so data will not be overwritten
-            Data = (byte[])data.MemberwiseClone();
+            Data=new byte[data.Length];
+            data.CopyTo(Data,0);
         }
     }
     

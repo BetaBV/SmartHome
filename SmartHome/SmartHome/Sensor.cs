@@ -11,42 +11,33 @@ namespace SmartHome
     {
         //Variables
         //Public
-        public event DataReceivedHandler DataReceived;
         public SensorType Type { get; private set; }
-        public String SensorLocation { get; private set; }//May be class
+        public Byte[] SensorLocation { get; private set; }//May be class
         public String SensorPhysicalLocation { get; private set; }
         public int SensorId { get; private set; }
         //Private
-        internal delegate void DataReceivedHandler(object sender, ReceivedData data);
-        private int SensorValue;
+        
+        private int value;
 
         //Constructor
-        public Sensor()
+        public Sensor(SensorType type, Byte[] sensorLocation, String sensorPhysicalLocation, int sensorId)
         {
-            
+            SensorId = sensorId;
+            SensorPhysicalLocation = sensorPhysicalLocation;
+            SensorLocation = sensorLocation;
+            Type = type;
         }
 
         //Functions
 
         public int ReadSensorValue()
         {
-            return SensorValue;
+            return value;
         }
 
-        protected virtual void OnDataReceived(ReceivedData data)
+        public void SetSensorValue(int value)
         {
-            DataReceivedHandler handler = DataReceived;
-            if (handler != null) handler(this, data);
-        }
-
-    }
-    class ReceivedData : EventArgs
-    {
-        public int Data { get; private set; }
-
-        public ReceivedData(int data)
-        {
-            Data = data;
+            this.value = value;
         }
     }
 }

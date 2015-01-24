@@ -18,7 +18,17 @@ namespace SmartHome
         public String ActuatorPhysicalLocation { get; private set; }
         //Private
 
+        private int value = 0;
+
         //Constructor
+        public Actuator(string actuatorType, ActuatorLowType actuatorLowType, int actuatorId, byte[] actuatorLocation, string actuatorPhysicalLocation)
+        {
+            ActuatorPhysicalLocation = actuatorPhysicalLocation;
+            ActuatorLocation = actuatorLocation;
+            ActuatorId = actuatorId;
+            ActuatorLowType = actuatorLowType;
+            ActuatorType = actuatorType;
+        }
 
         //Functions
         //Public
@@ -32,10 +42,14 @@ namespace SmartHome
             return retList.ToArray();
         }
 
-
-        public int ReadActuator(byte[] data)
+        public int ReadActuator()
         {
-            return 0;//todo HOW?!?
+            return value;
+        }
+
+        public void SetActuatorValue(int newValue)
+        {
+            value = newValue;
         }
         //Private
 
