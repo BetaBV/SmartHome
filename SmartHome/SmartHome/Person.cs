@@ -20,6 +20,13 @@ namespace SmartHome
         //Private
 
         //Constructor
+        public Person(string name, char gender, DateTime birtdate, int id)
+        {
+            Id = id;
+            Birtdate = birtdate;
+            Gender = gender;
+            Name = name;
+        }
 
         //Functions
         //Public

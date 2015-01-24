@@ -21,19 +21,17 @@ namespace SmartHome
 
         //Private
         private Serial serial;
-        private List<Person> persons;
-        private List<String> locations;
+        private List<Person> persons = new List<Person>();
+        private List<Fysicallocation> locations = new List<Fysicallocation>();
 
         private List<Sensor> sensors = new List<Sensor>();
         private List<Actuator> actuators = new List<Actuator>();
         
         //Constructor
-        public House(Serial serial, List<Person> persons, List<String> locations)
+        public House(Serial serial)
         {
             //Set variables
             this.serial = serial;
-            this.persons = persons;
-            this.locations = locations;
 
             //Read sensors and actuators from mysql database
 
@@ -68,6 +66,26 @@ namespace SmartHome
             }
 
             sensorReader.Close();
+            //load persons
+            var personCommand = new MySqlCommand("SELECT name,gender,birthdate,personId" +
+                                          "FROM sensor", con);
+            var personReader = personCommand.ExecuteReader();
+
+            while (personReader.Read())
+            {
+                persons.Add(new Person(personReader.GetString("name"), personReader.GetChar("gender"),personReader.GetDateTime("birthdate"),personReader.GetInt32("personId")));
+            }
+
+            personReader.Close();
+
+            var locationCommand = new MySqlCommand("SELECT *" +
+                                                   "FROM fysicallocation",con);
+            var locationReader = locationCommand.ExecuteReader();
+
+            while (locationReader.Read())
+            {
+                locations.Add(new Fysicallocation(locationReader.GetString("fysicallocation"),locationReader.GetString("discription"),locationReader.GetString("propertys")));
+            }
 
             //Initialise Serial
             serial.SerialReceived += serial_SerialReceived;
@@ -118,7 +136,7 @@ namespace SmartHome
 
         public List<String> GetLocations()
         {
-            return locations;
+            return locations.Select(location=>location.Location).ToList();
         }
         //Private
 
