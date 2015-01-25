@@ -96,10 +96,10 @@ namespace SmartHome
         //Functions
         //Public
         
-        public int ReadSensor(string location)
+        public int ReadSensor(byte[] location)
         {
 
-            return 0;//todo
+            return FindSensor(location).ReadSensorValue();
         }
 
         public bool WriteActuator(Byte[] location, Byte value)
