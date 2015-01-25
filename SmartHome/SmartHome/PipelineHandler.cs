@@ -18,7 +18,7 @@ namespace SmartHome
         
         private NamedPipeServerStream pipeServer = new NamedPipeServerStream("SmartHomePipeline",PipeDirection.InOut,5);
 
-        private volatile bool ServerRunning = true;
+        private volatile bool serverRunning = true;
 
         //Constructor
         public PipelineHandler(House house)
@@ -32,17 +32,20 @@ namespace SmartHome
         //public
         public void StopPipeline()
         {
-            ServerRunning = false;
+            serverRunning = false;
             pipeServer.Close();
         }
         //private
         private void ListeningThread()
         {
-            while (ServerRunning)
+            Console.WriteLine(@"[PIPE]Server Running on thread {0}",Thread.CurrentThread.ManagedThreadId);
+            while (serverRunning)
             {
                 try
                 {
+                    Console.WriteLine("[PIPE]Waiting for connection");
                     pipeServer.WaitForConnection();
+                    Console.WriteLine("[PIPE]Connected");
                     if (pipeServer.ReadByte() == 0xAD)//Check if proper client
                     {
                         switch (pipeServer.ReadByte())
@@ -64,20 +67,21 @@ namespace SmartHome
                                 pipeServer.WriteByte(house.WriteActuator(locationAW, value) ? (Byte)0x10 : (Byte)0x20);
                                 break;
                         }
+                        Console.WriteLine("[PIPE]Connection succesfull");
+                    }
+                    else
+                    {
+                        Console.WriteLine("[PIPE]Invallid connetion, didn't receive 0xAD");
                     }
                     pipeServer.Disconnect();
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.ToString());
+                    Console.WriteLine("[PIPE]Exception occured: "+e.ToString());
                 }
                 
             }
-        }
-
-        private void pipeHandleConnection()
-        {
-            
+            Console.WriteLine("[PIPE]Server shutting down!");
         }
     }
 }
