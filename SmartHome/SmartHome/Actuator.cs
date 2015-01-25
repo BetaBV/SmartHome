@@ -38,6 +38,7 @@ namespace SmartHome
             retList.Add((Byte)dataBytes.ACTUATORWRITE);
             retList.AddRange(ActuatorLocation);
             retList.Add((Byte)ActuatorLowType);
+            retList.Add(value);
             retList.Add((Byte)dataBytes.THERMINATOR);
             return retList.ToArray();
         }

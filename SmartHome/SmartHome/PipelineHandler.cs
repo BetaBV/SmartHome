@@ -55,7 +55,7 @@ namespace SmartHome
                                 pipeServer.Read(locationA, 0, 3);
                                 pipeServer.WriteByte((Byte)house.ReadActuator(locationA));
                                 break;
-                            case 0x02://ReadSensor (location[2]
+                            case 0x02://ReadSensor (location[2])
                                 var locationS = new Byte[2];
                                 pipeServer.Read(locationS, 0, 2);
                                 pipeServer.WriteByte((Byte)house.ReadSensor(locationS));
@@ -68,6 +68,7 @@ namespace SmartHome
                                 break;
                         }
                         Console.WriteLine("[PIPE]Connection succesfull");
+                        pipeServer.Flush();
                     }
                     else
                     {

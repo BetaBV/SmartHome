@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using SmartHome.Enumerators;
@@ -98,7 +99,15 @@ namespace SmartHome
         
         public int ReadSensor(byte[] location)
         {
+            //write ReadSensor packet to arduino
+            var readSensorBytes = new List<Byte>();
+            readSensorBytes.Add((Byte)dataBytes.SENSORREAD);
+            readSensorBytes.AddRange(location);
+            readSensorBytes.Add((Byte)dataBytes.THERMINATOR);
+            serial.SerialWrite(readSensorBytes.ToArray());
 
+            //wait for arduino to respond(Yes bad I know :( )
+            Thread.Sleep(50);
             return FindSensor(location).ReadSensorValue();
         }
 
@@ -120,7 +129,15 @@ namespace SmartHome
 
         public int ReadActuator(byte[] location)
         {
+            //write ReadActuator packet to arduino
+            var writeAcuatorBytes = new List<Byte>();
+            writeAcuatorBytes.Add((Byte)dataBytes.ACTUATORREAD);
+            writeAcuatorBytes.AddRange(location);
+            writeAcuatorBytes.Add((Byte)dataBytes.THERMINATOR);
+            serial.SerialWrite(writeAcuatorBytes.ToArray());
             
+            //wait for aduino to respond(Yes bad I know :( )
+            Thread.Sleep(50);
             return FindActuator(location).ReadActuator();
         }
 
@@ -129,7 +146,7 @@ namespace SmartHome
             return sensors.Where(sensor=>sensor.SensorPhysicalLocation==location).ToList();
         }
 
-        public List<Actuator> GetActuatorsAtLocation(string location)
+        public List<Actuator> GetActuatorsAtLocation(String location)
         {
             return actuators.Where(actuator => actuator.ActuatorPhysicalLocation == location).ToList(); //todo
         }
