@@ -68,8 +68,8 @@ namespace SmartHome
 
             sensorReader.Close();
             //load persons
-            var personCommand = new MySqlCommand("SELECT name,gender,birthdate,personId" +
-                                          "FROM sensor", con);
+            var personCommand = new MySqlCommand("SELECT name,gender,birthdate,personId " +
+                                          "FROM person", con);
             var personReader = personCommand.ExecuteReader();
 
             while (personReader.Read())
