@@ -17,8 +17,9 @@ namespace SmartHome
 
         public enum ActuatorLowType : byte
         {
-            SERVO = 0x01,
-            LED = 0x02
+            LED = 0x01,
+            PWM = 0x02,
+            SERVO = 0x03
         }
 
         public enum dataBytes : byte
@@ -28,11 +29,11 @@ namespace SmartHome
             /// </summary>
             SENSORREAD=0x10,
             /// <summary>
-            /// Reads the current(last known) position of Actuator ARDUINO,CHILD,PIN CHILD=0xff if no child
+            /// Reads the current(last known) position of Actuator ARDUINO,CHILD,PIN CHILD=0xfe if no child
             /// </summary>
             ACTUATORREAD=0x20,
             /// <summary>
-            /// Writes position to actuator ARDUINO,CHILD,PIN,TYPE,VALUE CHILD=0xff if no child
+            /// Writes position to actuator ARDUINO,CHILD,PIN,TYPE,VALUE CHILD=0xfe if no child
             /// </summary>
             ACTUATORWRITE=0x21,
             /// <summary>
